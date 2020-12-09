@@ -85,6 +85,53 @@ class TimeAgoTests : XCTestCase {
         let ago: String = self.date0.timeAgo(since: self.date1)
         XCTAssertEqual(ago, try DateToolsLocalizedStrings("Yesterday"))
     }
+
+    
+    
+    func testLongTimeAgo2DaysWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 05 18:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 18:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("In 2 days"))
+    }
+    
+    func testLongTimeAgo1DayAndHalfWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 06 9:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 18:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("Tomorrow"))
+    }
+    
+    func testLongTimeAgoExactlyYesterdayWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 06 18:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 18:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("Tomorrow"))
+    }
+    
+    func testLongTimeAgoLessThan24hoursButYesterdayWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 00:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 22:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("In 22 hours"))
+    }
+    
+    func testLongTimeAgoLessThan24hoursSameDayWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 10:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 18:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("In 8 hours"))
+    }
+    
+    func testLongTimeAgoBetween24And48HoursWithFutureDate() throws {
+        self.date1 = try XCTUnwrap(self.formatter.date(from: "2014 11 07 10:15:12.000"))
+        self.date0 = try XCTUnwrap(self.formatter.date(from: "2014 11 08 18:15:12.000"))
+        let ago: String = self.date0.timeAgo(since: self.date1)
+        XCTAssertEqual(ago, try DateToolsLocalizedStrings("Tomorrow"))
+    }
+
+    
+    
     
     func testBasicShortTimeAgo() {
         let now: String = self.date0.shortTimeAgo(since: self.date0)

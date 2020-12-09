@@ -87,6 +87,8 @@
 "%dh" = "%dh"; // hour
 "%dm" = "%dm"; // minute
 "%ds" = "%ds"; // second
+"Now" = "Now";
+
 
 /* Week format for */
 "Mon" = "Mon";
@@ -170,5 +172,3 @@
 
 /* No comment provided by engineer. */
 "In 1 second" = "In 1 second";
-
-

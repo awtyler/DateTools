@@ -29,6 +29,18 @@ public extension Date {
     }
     
     /**
+     *  Takes in a date and returns a string with the most convenient unit of time representing
+     *  how far in the past or future that date is from now.
+     *
+     *  - parameter date: Date to be measured from now
+     *
+     *  - returns String - Formatted return string
+     */
+    static func timeUntil(since date:Date) -> String{
+        return date.timeAgo(since: Date(), numericDates: false, numericTimes: false, allowFutureTime: true)
+    }
+    
+    /**
      *  Takes in a date and returns a shortened string with the most convenient unit of time representing
      *  how far in the past that date is from now.
      *
@@ -37,6 +49,18 @@ public extension Date {
      *  - returns String - Formatted return string
      */
     static func shortTimeAgo(since date:Date) -> String {
+        return date.shortTimeAgo(since:Date())
+    }
+    
+    /**
+     *  Takes in a date and returns a shortened string with the most convenient unit of time representing
+     *  how far in the past or future that date is from now. Identical to shortTimeAgo
+     *
+     *  - parameter date: Date to be measured from now
+     *
+     *  - returns String - Formatted return string
+     */
+    static func shortTimeUntil(since date:Date) -> String {
         return date.shortTimeAgo(since:Date())
     }
     
@@ -51,6 +75,16 @@ public extension Date {
     }
     
     /**
+     *  Returns a string with the most convenient unit of time representing
+     *  how far in the past that date is from now.
+     *
+     *  - returns String - Formatted return string
+     */
+    var timeFromNow: String {
+        return self.timeAgo(since:Date(), allowFutureTime: true)
+    }
+    
+    /**
      *  Returns a shortened string with the most convenient unit of time representing
      *  how far in the past that date is from now.
      *
@@ -59,13 +93,23 @@ public extension Date {
     var shortTimeAgoSinceNow: String {
         return self.shortTimeAgo(since:Date())
     }
-    
-    func timeAgo(since date:Date, numericDates: Bool = false, numericTimes: Bool = false) -> String {
+
+    /**
+     *  Returns a shortened string with the most convenient unit of time representing
+     *  how far in the past or future that date is from now. Identical to shortTimeAgoSinceNow
+     *
+     *  - returns String - Formatted return string
+     */
+    var shortTimeFromNow: String {
+        return self.shortTimeAgo(since:Date())
+    }
+
+    func timeAgo(since date:Date, numericDates: Bool = false, numericTimes: Bool = false, allowFutureTime: Bool = false) -> String {
         let calendar = NSCalendar.current
         let unitFlags = Set<Calendar.Component>([.second,.minute,.hour,.day,.weekOfYear,.month,.year])
         let earliest = self.earlierDate(date)
         let latest = (earliest == self) ? date : self //Should be triple equals, but not extended to Date at this time
-        let inFuture = earliest == date
+        let inFuture = allowFutureTime && earliest == date
         
         let components = calendar.dateComponents(unitFlags, from: earliest, to: latest)
         let yesterday = date.subtract(1.days)
@@ -75,6 +119,8 @@ public extension Date {
         //The following strings are present in the translation files but lack logic as of 2014.04.05
         //@"Today", @"This week", @"This month", @"This year"
         //and @"This morning", @"This afternoon"
+        
+        //TODO: Future strings NOT translated yet as of 2020.11.09
         
         if (components.year! >= 2) {
             let format = inFuture ? "In %%d %@years" : "%%d %@years ago"
@@ -86,7 +132,7 @@ public extension Date {
                 text = inFuture ? "In 1 year" : "1 year ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.month! >= 2) {
             let format = inFuture ? "In %%d %@months" : "%%d %@months ago"
@@ -96,10 +142,10 @@ public extension Date {
             
             var text = inFuture ? "Next month" : "Last month"
             if (numericDates) {
-                text = inFuture ? "In 1 month" : "1 month ago";
+                text = inFuture ? "In 1 month" : "1 month ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.weekOfYear! >= 2) {
             let format = inFuture ? "In %%d %@weeks" : "%%d %@weeks ago"
@@ -107,12 +153,12 @@ public extension Date {
         }
         else if (components.weekOfYear! >= 1) {
             
-            var text = inFuture ? "Next week": "Last week"
+            var text = inFuture ? "Next week" : "Last week"
             if (numericDates) {
-                text = inFuture ? "In 1 week": "1 week ago");
+                text = inFuture ? "In 1 week" : "1 week ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.day! >= 2) {
             let format = inFuture ? "In %%d %@days" : "%%d %@days ago"
@@ -121,10 +167,10 @@ public extension Date {
         else if (isYesterday) {
             var text = inFuture ? "Tomorrow" : "Yesterday"
             if (numericDates) {
-                text = inFuture ? "In 1 day" : "1 day ago";
+                text = inFuture ? "In 1 day" : "1 day ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.hour! >= 2) {
             let format = inFuture ? "In %%d %@hours" : "%%d %@hours ago"
@@ -134,10 +180,10 @@ public extension Date {
             
             var text = inFuture ? "In an hour" : "An hour ago"
             if (numericTimes) {
-                text = inFuture ? "In 1 hour" : "1 hour ago";
+                text = inFuture ? "In 1 hour" : "1 hour ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.minute! >= 2) {
             let format = inFuture ? "in %%d %@minutes" : "%%d %@minutes ago"
@@ -147,10 +193,10 @@ public extension Date {
             
             var text = inFuture ? "In a minute" : "A minute ago"
             if (numericTimes) {
-                text = inFuture ? "In 1 minute" : "1 minute ago";
+                text = inFuture ? "In 1 minute" : "1 minute ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
         else if (components.second! >= 3) {
             let format = inFuture ? "In %%d %@seconds" : "%%d %@seconds ago"
@@ -160,10 +206,10 @@ public extension Date {
             
             var text = inFuture ? "Right now" : "Just now"
             if (numericTimes) {
-                text = inFuture ? "In 1 second" : "1 second ago";
+                text = inFuture ? "In 1 second" : "1 second ago"
             }
             
-            return DateToolsLocalizedStrings(text);
+            return DateToolsLocalizedStrings(text)
         }
     }
     
@@ -205,8 +251,8 @@ public extension Date {
             return self.logicalLocalizedStringFromFormat(format: "%%d%@s", value: components.second!)
         }
         else {
-            return self.logicalLocalizedStringFromFormat(format: "%%d%@s", value: components.second!)
-            //return DateToolsLocalizedStrings(@"Now"); //string not yet translated 2014.04.05
+//            return self.logicalLocalizedStringFromFormat(format: "%%d%@s", value: components.second!)
+            return DateToolsLocalizedStrings("Now") //string not yet translated 2014.04.05
         }
     }
     
