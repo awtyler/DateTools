@@ -65,7 +65,7 @@ public extension Date {
         let unitFlags = Set<Calendar.Component>([.second,.minute,.hour,.day,.weekOfYear,.month,.year])
         let earliest = self.earlierDate(date)
         let latest = (earliest == self) ? date : self //Should be triple equals, but not extended to Date at this time
-        
+        let inFuture = earliest == date
         
         let components = calendar.dateComponents(unitFlags, from: earliest, to: latest)
         let yesterday = date.subtract(1.days)
@@ -77,15 +77,16 @@ public extension Date {
         //and @"This morning", @"This afternoon"
         
         if (components.year! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@years ago", value: components.year!)
+            let f = inFuture ? "in %%d %@years" : "%%d %@years ago"
+            return self.logicalLocalizedStringFromFormat(format: f, value: components.year!)
         }
         else if (components.year! >= 1) {
-            
+            let f = inFuture ? "in 1 year" : "1 year ago"
             if (numericDates) {
-                return DateToolsLocalizedStrings("1 year ago");
+                return DateToolsLocalizedStrings(f);
             }
             
-            return DateToolsLocalizedStrings("Last year");
+            return DateToolsLocalizedStrings(inFuture ? "Next year" : "Last year");
         }
         else if (components.month! >= 2) {
             return self.logicalLocalizedStringFromFormat(format: "%%d %@months ago", value: components.month!)
@@ -131,6 +132,7 @@ public extension Date {
             return DateToolsLocalizedStrings("An hour ago");
         }
         else if (components.minute! >= 2) {
+            let f = inFuture ? "in %%d %@minutes" : "%%d %@minutes ago"
             return self.logicalLocalizedStringFromFormat(format: "%%d %@minutes ago", value: components.minute!)
         }
         else if (components.minute! >= 1) {

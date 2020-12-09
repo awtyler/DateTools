@@ -104,3 +104,71 @@
 "周五" = "星期五";
 "周六" = "星期六";
 "周日" = "星期日";
+
+
+// Future Time
+
+/* No comment provided by engineer. */
+"in %d days" = "in %d days";
+
+/* No comment provided by engineer. */
+"in %d hours" = "in %d hours";
+
+/* No comment provided by engineer. */
+"in %d minutes" = "in %d minutes";
+
+/* No comment provided by engineer. */
+"in %d months" = "in %d months";
+
+/* No comment provided by engineer. */
+"in %d seconds" = "in %d seconds";
+
+/* No comment provided by engineer. */
+"in %d weeks" = "in %d weeks";
+
+/* No comment provided by engineer. */
+"in %d years" = "in %d years";
+
+/* No comment provided by engineer. */
+"in a minute" = "in a minute";
+
+/* No comment provided by engineer. */
+"in an hour" = "in an hour";
+
+/* No comment provided by engineer. */
+"Just now" = "Just now";
+
+/* No comment provided by engineer. */
+"Next month" = "Next month";
+
+/* No comment provided by engineer. */
+"Next week" = "Next week";
+
+/* No comment provided by engineer. */
+"Next year" = "Next year";
+
+/* No comment provided by engineer. */
+"Tomorrow" = "Tomorrow";
+
+/* No comment provided by engineer. */
+"in 1 year" = "in 1 year";
+
+/* No comment provided by engineer. */
+"in 1 month" = "in 1 month";
+
+/* No comment provided by engineer. */
+"in 1 week" = "in 1 week";
+
+/* No comment provided by engineer. */
+"in 1 day" = "in 1 day";
+
+/* No comment provided by engineer. */
+"in 1 hour" = "in 1 hour";
+
+/* No comment provided by engineer. */
+"in 1 minute" = "in 1 minute";
+
+/* No comment provided by engineer. */
+"in 1 second" = "in 1 second";
+
+
