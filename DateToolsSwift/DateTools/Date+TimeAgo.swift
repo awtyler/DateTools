@@ -133,7 +133,7 @@ public extension Date {
         }
         else if (components.minute! >= 2) {
             let f = inFuture ? "in %%d %@minutes" : "%%d %@minutes ago"
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@minutes ago", value: components.minute!)
+            return self.logicalLocalizedStringFromFormat(format: f, value: components.minute!)
         }
         else if (components.minute! >= 1) {
             
