@@ -77,82 +77,93 @@ public extension Date {
         //and @"This morning", @"This afternoon"
         
         if (components.year! >= 2) {
-            let f = inFuture ? "in %%d %@years" : "%%d %@years ago"
-            return self.logicalLocalizedStringFromFormat(format: f, value: components.year!)
+            let format = inFuture ? "In %%d %@years" : "%%d %@years ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.year!)
         }
         else if (components.year! >= 1) {
-            let f = inFuture ? "in 1 year" : "1 year ago"
+            var text = inFuture ? "Next year" : "Last year"
             if (numericDates) {
-                return DateToolsLocalizedStrings(f);
+                text = inFuture ? "In 1 year" : "1 year ago"
             }
             
-            return DateToolsLocalizedStrings(inFuture ? "Next year" : "Last year");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.month! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@months ago", value: components.month!)
+            let format = inFuture ? "In %%d %@months" : "%%d %@months ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.month!)
         }
         else if (components.month! >= 1) {
             
+            var text = inFuture ? "Next month" : "Last month"
             if (numericDates) {
-                return DateToolsLocalizedStrings("1 month ago");
+                text = inFuture ? "In 1 month" : "1 month ago";
             }
             
-            return DateToolsLocalizedStrings("Last month");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.weekOfYear! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@weeks ago", value: components.weekOfYear!)
+            let format = inFuture ? "In %%d %@weeks" : "%%d %@weeks ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.weekOfYear!)
         }
         else if (components.weekOfYear! >= 1) {
             
+            var text = inFuture ? "Next week": "Last week"
             if (numericDates) {
-                return DateToolsLocalizedStrings("1 week ago");
+                text = inFuture ? "In 1 week": "1 week ago");
             }
             
-            return DateToolsLocalizedStrings("Last week");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.day! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@days ago", value: components.day!)
+            let format = inFuture ? "In %%d %@days" : "%%d %@days ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.day!)
         }
         else if (isYesterday) {
+            var text = inFuture ? "Tomorrow" : "Yesterday"
             if (numericDates) {
-                return DateToolsLocalizedStrings("1 day ago");
+                text = inFuture ? "In 1 day" : "1 day ago";
             }
             
-            return DateToolsLocalizedStrings("Yesterday");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.hour! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@hours ago", value: components.hour!)
+            let format = inFuture ? "In %%d %@hours" : "%%d %@hours ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.hour!)
         }
         else if (components.hour! >= 1) {
             
+            var text = inFuture ? "In an hour" : "An hour ago"
             if (numericTimes) {
-                return DateToolsLocalizedStrings("1 hour ago");
+                text = inFuture ? "In 1 hour" : "1 hour ago";
             }
             
-            return DateToolsLocalizedStrings("An hour ago");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.minute! >= 2) {
-            let f = inFuture ? "in %%d %@minutes" : "%%d %@minutes ago"
-            return self.logicalLocalizedStringFromFormat(format: f, value: components.minute!)
+            let format = inFuture ? "in %%d %@minutes" : "%%d %@minutes ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.minute!)
         }
         else if (components.minute! >= 1) {
             
+            var text = inFuture ? "In a minute" : "A minute ago"
             if (numericTimes) {
-                return DateToolsLocalizedStrings("1 minute ago");
+                text = inFuture ? "In 1 minute" : "1 minute ago";
             }
             
-            return DateToolsLocalizedStrings("A minute ago");
+            return DateToolsLocalizedStrings(text);
         }
         else if (components.second! >= 3) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@seconds ago", value: components.second!)
+            let format = inFuture ? "In %%d %@seconds" : "%%d %@seconds ago"
+            return self.logicalLocalizedStringFromFormat(format: format, value: components.second!)
         }
         else {
             
+            var text = inFuture ? "Right now" : "Just now"
             if (numericTimes) {
-                return DateToolsLocalizedStrings("1 second ago");
+                text = inFuture ? "In 1 second" : "1 second ago";
             }
             
-            return DateToolsLocalizedStrings("Just now");
+            return DateToolsLocalizedStrings(text);
         }
     }
     
